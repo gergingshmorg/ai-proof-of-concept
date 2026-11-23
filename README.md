@@ -9,6 +9,7 @@
 Standard LLMs suffer from **"Anterograde Amnesia"**—once training finishes, their weights freeze. **Bashful** wraps a from-scratch PyTorch implementation of the **HOPE Continuum Memory System** in an interactive console designed to test live, modular continual learning on consumer hardware (Mac Apple Silicon / MPS, CUDA, or CPU).
 
 ### Meet the Mascot
+
 The console is fronted by **Bashful**, a retro pixel-art cartridge with a bash prompt face (`>_` turned into `>_<`) that shifts expressions for real-time visual feedback on system state:
 
 | Expression | State | What Bashful is Doing |
@@ -35,7 +36,7 @@ The console is fronted by **Bashful**, a retro pixel-art cartridge with a bash p
 
 ## Project Status & Honest Caveats
 
-This repo is an **experimental proof of concept** built on top of our documented 86M-parameter HOPE marathon (`v0.1-marathon`):
+This repo is an **experimental proof of concept** validated on our documented 86M-parameter HOPE training runs:
 
 * **What works:** Fluent English generation, structured Q&A/Reasoning formatting, O(N) state-passing chat (`chat.py` & Gradio `app.py`), and measurable in-context fast-memory adaptation.
 * **Known architectural limits:** At 86M parameters / ~786M tokens, deep slow tiers (`blocks 8–15`) under-train compared to the output head, and stacking 16 position-wise CMS blocks attenuates linear readout of the fast-memory context bag (R² = 0.066). Upcoming cartridge and wiring experiments focus on giving `fast_out` a more direct path to the output head.
@@ -53,25 +54,25 @@ source .venv/bin/activate  # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 2. Grab a Pretrained Checkpoint (or Train From Scratch)
+### 2. Train Your Base Model
+Pretrained weights are not bundled in this repository—run the automated 2-phase pipeline (Wikipedia foundation + Q&A fine-tune) to train a base checkpoint locally:
 ```bash
-# Download the 86M marathon checkpoints (~986 MB each)
-gh release download v0.1-marathon --repo obekt/HOPE-nested-learning --pattern "*.pth"
-
-# Or run the automated 2-phase pipeline (Wikipedia foundation + Q&A fine-tune)
 python run_pipeline.py
 ```
 
 ### 3. Launch Bashful
+
 * **Interactive CLI Console:**
   ```bash
   python chat.py --model hope_final_best.pth
   ```
   *(Supports live commands: `/temp 0.7`, `/tokens 250`, `/reasoning on|off`, `/format raw|qa`)*
+
 * **Web UI (Gradio):**
   ```bash
   python app.py
   ```
+
 * **Single-Shot Generation:**
   ```bash
   python generate.py --prompt "Why is the sky blue?" --temperature 0.3
