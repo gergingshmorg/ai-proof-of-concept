@@ -1,6 +1,6 @@
 # Bashful (`>_<`) — A Modular, Continual-Learning AI Console
 
-> **Proof of Concept:** An experimental, vibecoded local AI console built around the **HOPE (Nested Learning)** architecture—featuring real-time fast/slow memory allocation, plug-and-play `.pt` subject cartridges, and a retro pixel-art mascot that reacts to what the model is doing under the hood.
+> **Proof of Concept:** An experimental, vibecoded local AI console built around the **HOPE (Nested Learning)** architecture—featuring real-time fast/slow memory allocation, plug-and-play subject cartridges (currently `.pt`/`.pth` during prototyping; `.safetensors` for the finished model), and a retro pixel-art mascot that reacts to what the model is doing under the hood.
 
 ---
 
@@ -28,7 +28,7 @@ The console is fronted by **Bashful**, a retro pixel-art cartridge with a bash p
 * **Linked Memory Budget Sliders (5% Cap):** Two linked controls—**Fast Memory %** and **Slow Memory %**—share a strict **5% combined active parameter budget** (keeping 95% of the base model frozen for speed and stability).
   * *Long coding session?* Slide toward **Fast Memory** (e.g., `3% Fast / 2% Slow`) to track live variables without losing context.
   * *Need durable domain retention?* Dial up **Slow Memory**.
-* **Plug-and-Play Subject Cartridges (`.pt`):** Queue up a domain (Python, Math, Dialogue) to train a lightweight, portable `.pt` cartridge (`≤ 10%` of base parameters) for targeted specialization without overwriting the base checkpoint.
+* **Plug-and-Play Subject Cartridges (`.pt` → `.safetensors`):** Queue up a domain (Python, Math, Dialogue) to train a lightweight, portable cartridge (`≤ 10%` of base parameters) for targeted specialization without overwriting the base checkpoint. *(Note: Current prototyping uses standard PyTorch `.pt`/`.pth` files; finished model releases and distributable cartridges will use `.safetensors`.)*
 * **Community Library & Deterministic Benchmarks:** Share trained cartridges and validate them against deterministic, seed-locked custom benchmarks (`probe_model.py` / `eval_suite.py`) to earn reproducible stats.
 * **Fast Consumer Inference:** Built on top of a chunk-parallel delta-rule scan (`5.2×` training speedup) and O(N) state-passing inference (`~380 tok/s` on CPU, `~500 tok/s` on Apple MPS).
 
@@ -55,7 +55,7 @@ pip install -r requirements.txt
 ```
 
 ### 2. Train Your Base Model
-Pretrained weights are not bundled in this repository—run the automated 2-phase pipeline (Wikipedia foundation + Q&A fine-tune) to train a base checkpoint locally:
+Pretrained weights are not bundled in this repository—run the automated 2-phase pipeline (Wikipedia foundation + Q&A fine-tune) to train a base checkpoint locally (outputs `.pt`/`.pth` checkpoints during training; final release will export to `.safetensors`):
 ```bash
 python run_pipeline.py
 ```
@@ -98,5 +98,5 @@ python run_pipeline.py
 
 * **Code License:** Released under the [MIT License](LICENSE). Feel free to fork, modify, and experiment with it.
 * **Research Credit:** Built as an unofficial, from-scratch PyTorch implementation inspired by **"Nested Learning: The Illusion of Deep Learning"** (Ali Behrouz, Meisam Razaviyayn, Peilin Zhong, Vahab Mirrokni — Google Research).
-* **Mascot & Console Concept:** Vibecoded as an open sandbox for modular continual learning and portable `.pt` adapters.
+* **Mascot & Console Concept:** Vibecoded as an open sandbox for modular continual learning and portable adapters (`.pt` in dev, `.safetensors` for finished models).
 * **Disclaimer:** This is an independent community proof-of-concept and is not affiliated with, endorsed by, or maintained by Google.
