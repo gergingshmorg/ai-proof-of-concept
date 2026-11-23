@@ -1,0 +1,11 @@
+{
+  "split": "val",
+  "n_chunks": 439,
+  "chunk_len": 513,
+  "seq_len": 512,
+  "total_tokens": 225207,
+  "vocab_size": 50257,
+  "dtype": "uint16",
+  "eos_id": 50256,
+  "pad_id": 50256
+}

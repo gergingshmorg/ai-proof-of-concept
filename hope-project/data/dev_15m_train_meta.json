@@ -1,0 +1,11 @@
+{
+  "split": "train",
+  "n_chunks": 88,
+  "chunk_len": 513,
+  "seq_len": 512,
+  "total_tokens": 45144,
+  "vocab_size": 1132,
+  "dtype": "uint16",
+  "eos_id": 1,
+  "pad_id": 0
+}
